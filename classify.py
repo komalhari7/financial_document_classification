@@ -18,18 +18,16 @@ for index, value in enumerate(files):
 
     conf_score = results[0].probs.data.tolist()
 
-    for x in range(len(conf_score)):  # Loop through first 4 probability values
+    for x in range(len(conf_score)):                        # Loop through probability values
         if conf_score[x] == max(conf_score):
             name = results[0].names[x]
             os.makedirs(name, exist_ok=True)
-            file_extension = os.path.splitext(value)[1] 
-            new_name = f"{name}_{value}{file_extension}"  # Keep original extension
-            new_path = os.path.join(name, new_name)
-            # Full path for the new file name
-              # Rename using full paths
-            shutil.copy(document_path, name)
-            os.rename(os.path.join(name, value), new_path)
-            break  # Exit loop after renaming
+            file_extension = os.path.splitext(value)[1]     # Extract extenstion from file
+            new_name = f"{name}_{value}{file_extension}"    # New document name
+            new_path = os.path.join(name, new_name)         # New location of document   
+            shutil.copy(document_path, name)                # Copy to new location
+            os.rename(os.path.join(name, value), new_path)  # Rename the document after copying
+            break  
 
 
 
